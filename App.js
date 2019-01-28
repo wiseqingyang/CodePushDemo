@@ -9,7 +9,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import codepush from 'react-native-code-push'
+// import codepush from 'react-native-code-push'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-App = codepush(App);
+// App = codepush(App);
