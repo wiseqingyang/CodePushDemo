@@ -1,5 +1,7 @@
 # CodePushDemo
 
+<h1 style="color:red">尚未完成,请勿参考</h1>
+
 比较完整的研究一下微软的 [codePush](https://github.com/Microsoft/react-native-code-push)；
 
 从网上找的例子比较碎，官网文档全是英文的，但是我英语又不好，恰好是周末，决定花一个周末拿这个练手，我的开发环境是 `windows + android`， `React Native` 是最新的 0.58 版本。
