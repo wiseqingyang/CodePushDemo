@@ -9,6 +9,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+
 import codePush from 'react-native-code-push'
 
 const instructions = Platform.select({
@@ -55,4 +56,8 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< HEAD
 App = codePush(App);
+=======
+// App = codepush(App);
+>>>>>>> 301691863add34439ecc413f73d8f9b943dd2784
