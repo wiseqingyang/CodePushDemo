@@ -29,7 +29,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native 1.0.2!</Text>
+        <Text style={styles.welcome}>Welcome to React Native 1.0.2</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
@@ -56,8 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
 App = codePush(App);
-=======
-// App = codepush(App);
->>>>>>> 301691863add34439ecc413f73d8f9b943dd2784
