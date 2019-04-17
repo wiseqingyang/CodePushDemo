@@ -1,5 +1,7 @@
 # CodePushDemo
 
+# **尚未完成,请勿参考**
+
 比较完整的研究一下微软的 [codePush](https://github.com/Microsoft/react-native-code-push)；
 
 从网上找的例子比较碎，官网文档全是英文的，但是我英语又不好，恰好是周末，决定花一个周末拿这个练手，我的开发环境是 `windows + android`， `React Native` 是最新的 0.58 版本。
@@ -28,7 +30,7 @@ npm install --save react-native-code-push
 如果不知道自己登录了没，可以用 `code-push whoami` 检查自己是否登录。 
 
 登录后创建一个 `App` 
-```
+```Shell
 code-push app add CodePushDemo-Android Android react-native
 ```
 这里需要注意：
@@ -36,12 +38,12 @@ code-push app add CodePushDemo-Android Android react-native
 - 用 `-Android` `-iOS` 后缀区分不同系统
 - 如果重名会导致不可预料错误
 
-上面的命令是创建了一个 `react-antive` 平台(`CodePush` 还支持), `Android` 系统下的一个应用，如果创建 `iOS` 平台的应用自然是
+上面的命令是创建了一个 `react-native` 平台（`CodePush` 还支持其他平台）， `Android` 系统下的一个应用，如果创建 `iOS` 平台的应用自然是
 ```
 code-push app add CodePushDemo-iOS iOS react-native
 ``` 
 
-创建完 `APP` 后会自动创建两个部署 `Staging` 和 `Production`，并且打印出了个字的 `Deployment Key`:
+创建完 `APP` 后会自动创建两个部署 `Staging` 和 `Production`，并且打印出了各自的 `Deployment Key`:
 ```
 Successfully added the "CodePushDemo-Android" app, along with the following default deployments:
 ┌────────────┬────────────────────────────────────────────────────────────┐
@@ -51,6 +53,25 @@ Successfully added the "CodePushDemo-Android" app, along with the following defa
 ├────────────┼────────────────────────────────────────────────────────────┤
 │ Staging    │ QNHp6_7GRRKJiZZZr1jNu9UpivV54644c03a-2db1-43a6-9378-adbc42 │
 └────────────┴────────────────────────────────────────────────────────────┘
+```
+## 代码中集成
+
+`App.js` 代码中添加 `codepush`
+```JavaScript
+import React, {Component} from 'react';
+import {Platform, StyleSheet, Text, View} from 'react-native';
++ import codePush from 'react-native-code-push';
+- export default class App extends Component {
+- class App extends Component {
+    render() {
+        return (
+            <View>
+                <Text>Hello React Native</Text>
+            </View>
+        )
+    }
+}
++ export default codePush(App);
 ```
 
 ## 准备一个原始包
@@ -63,8 +84,8 @@ keytool -genkey -v -keystore codepushdemo.keystore -alias codepushdemo -keyalg R
 ```
 APP_RELEASE_STORE_FILE = codepushdemo.keystore
 APP_RELEASE_KEY_ALIAS = codepushdemo
-APP_RELEASE_STORE_PASSWORD = ***** // 自己的密码
-APP_RELEASE_KEY_PASSWORD = ***** // 自己的密码
+APP_RELEASE_STORE_PASSWORD = 自己的密码
+APP_RELEASE_KEY_PASSWORD = 自己的密码
 ```
 在 `android/app/build.gradle` 中调用配置
 ```
@@ -85,4 +106,17 @@ buildTypes {
     }
 }
 ```
-配置完成，现在在 `app` 目录下使用命令 `./gradlew assemblereleast` 生成一个初始包，这个包仅仅集成了 `CodePush` 的初始包。
+配置完成，现在在 `app` 目录下使用命令 `./gradlew assemblereleas` 生成一个初始包，这个包仅仅集成了 `CodePush` 的初始包。命令运行完后 `apk` 包在目录 `projectDir/android/app/build/outputs/apk/release` 下
+
+## 发布更新
+
+把 `App.js` 中文件稍作修改
+```JavaScript
+<Text>Hello React Native</Text>
+<Text>Hello CodePush</Text>
+```
+
+发布更新 
+```
+code-push release-react <AppName> <Platform>
+```
