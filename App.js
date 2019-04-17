@@ -56,8 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
 App = codePush(App);
-=======
-// App = codepush(App);
->>>>>>> 301691863add34439ecc413f73d8f9b943dd2784
