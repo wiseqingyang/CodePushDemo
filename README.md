@@ -120,3 +120,65 @@ buildTypes {
 ```
 code-push release-react <AppName> <Platform>
 ```
+
+## api
+`SyncStatusChangedCallback` 接收一个 `status` 参数的回调，具体 `status` 为
+
+| status | desc |
+| -------|----------|
+| UP_TO_DATE | 已经是最新了 |
+| UPDATE_INSTALLED | 更新已安装，接下来是下次启动/回到前台生效还是在 `SyncStatusChangedCallback` 函数返回后生效，取决于SyncOptions 中标明的 InstallMode |
+| UPDATE_IGNORED | 非强制更新下用户选择忽略更新（仅在有 `updateDialog` 的情况下生效） |
+| UNKNOWN_ERROR | 未知错误 |
+| SYNC_IN_PROGRESS | 有正在运行中的操作阻塞当前操作 |
+| CHECKING_FOR_UPDATE | 检查更新中 |
+| AWAITING_USER_ACTION | 等待用户确认操作中（仅在有 `updateDialog` 的情况下生效） |
+| DOWNLOADING_PACKAGE | 可用更新下载中 |
+| INSTALLING_UPDATE | 更新安装中 |
+
+## code-push release-react
+`release-react` 命令做了两件事
+1. 运行 `react-native bundle` 命令把需要更新的代码和资源打包，这个步骤尽量使用一些默认的配置参数，当然也可以灵活的自定义参数
+2. 从当前项目中的 `Info.plist` 或 `build.gradle` 文件中读取版本号 `targetBinaryVersion`
+
+### 命令参数
+- App name
+- Platform
+    - `ios` `android` 或 `windows` 大小写不敏感，此参数只会影响打包方式。
+- Deployment name
+  - 这个参数可以用"--deploymentName" 或 "-d"来设置。
+- Description
+  - 这个参数可以用"--description" 或 "--des"来设置。
+- Mandatory
+- No duplicate release error
+- Rollout
+  - 如果未标识，则对所有用户生效
+- Target binary version
+  - 如果未标识，默认取 `Info.plist` 或 `build.gradle` 中的版本
+- Bundle name
+  - 如果未标识，默认为 `main.jsbundle` (iOS) `index.android.bundle` (Android) `index.windows.bundle` (Windows) 
+  - 既可以用 `--bundleName` 也可以用 `-b` 表示
+- Development
+  - 是否生成未压缩，开发版的 `js bundle`，默认为 `false`
+  - 既可以用 `--development` 也可以用 `-dev` 表示
+- Disable
+- Entry File
+  - 既可以用 `--entryFile` 也可以用 `-e` 表示
+- Gradle file（仅 Android）
+  - 指定 `build,gradle` 文件的相对位置，一般来说命令会自动从标准 `React-Native` 项目中寻找，如果你的项目不标准才需要这个参数，这样就不用显式指定版本号了
+  - 因为 `build.gradle` 是个必须的文件名，所以相对路径中可以加也可以不加文件名。
+- Plist file 
+  - 既可以用 `--plistFile` 也可以用 `-p` 表示
+- Private key path
+- Plist file prefix 
+  - 如果不同环境下右不同的plist文件前缀，使用此参数
+  - 既可以用 `--plistFilePrefix` 也可以用 `-pre` 表示
+- Sourcemap output
+  -  `js bundle` 文件的 `sourcemap` 文件生成相对路径，如果未标明则不生成
+  -  既可以用 `--sourcemapOutput` 也可以用 `-s` 表示
+-  Output directory
+   -  `jsbundle sourcemap assets` 文件相对路径 如果未标明默认为 `/tmp/CodePush`
+   -  目标路径下的所有文件将会被清空
+-   既可以用 `--outputDir ` 也可以用 `-o` 表示
+
+[官方文档](https://github.com/Microsoft/code-push/blob/master/cli/README-cn.md#rollout-%E5%8F%82%E6%95%B0)
